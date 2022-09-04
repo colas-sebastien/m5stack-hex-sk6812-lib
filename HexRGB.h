@@ -23,28 +23,29 @@ class HexRGB
 {
   public:
 
-    // Usesfull values to control the Hex
+    // Usesfull constants to control the Hex
     const uint8_t HEXRGB_NUM_LEDS      = 37;
     const uint8_t HEXRGB_NUM_LINES     =  7;
     const uint8_t HEXRGB_NUM_DIAGONALS = 13;
 
     // Contructor
     HexRGB(int number_hex,int brightness);
-    
-    void    led            (int hex_id, int pixel_id, CRGB color);
-    void    color          (int hex_id, CRGB color);
+
+    // Functions
     void    border         (int hex_id, CRGB color, int border_id);
     void    border_gradient(int hex_id, CRGBPalette16 palette,int border_id,int index);
-    void    line           (int hex_id, CRGB color, int line_id);    
-    void    diagonal       (int hex_id, CRGB color, int diagonal_id);    
-    void    triangle       (int hex_id, CRGB color);    
-    void    rotation       (int hex_id, int rotation_id);
-    void    gradient       (int hex_id, CRGBPalette16 palette, int direction,int index);
-    void    gradient       (int hex_ids[],int nb_hex, CRGBPalette16 palette, int direction,int index, int gap);
-    void    fadeToBlack    (int hex_id, uint8_t fadeBy);
     uint8_t browse         (int model,uint8_t index);
+    void    color          (int hex_id, CRGB color);
+    void    diagonal       (int hex_id, CRGB color, int diagonal_id);    
+    void    fadeToBlack    (int hex_id, uint8_t fadeBy);
+    void    gradient       (int hex_id, CRGBPalette16 palette, int direction,int index);
+    void    gradient       (int hex_ids[],int nb_hex, CRGBPalette16 palette, int direction,int index, int gap);    
+    void    led            (int hex_id, int pixel_id, CRGB color);
+    void    led_array      (int hex_id, CRGB color, uint8_t *led_array,int led_array_size);    
+    void    line           (int hex_id, CRGB color, int line_id);    
+    void    rotation       (int hex_id, int rotation_id);
     void show();
-    void led_array(int hex_id, CRGB color, uint8_t *led_array,int led_array_size);
+    void    triangle       (int hex_id, CRGB color);    
     
   private:
     CRGB *tmpLeds;
