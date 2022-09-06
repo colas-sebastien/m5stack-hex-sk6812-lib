@@ -14,7 +14,7 @@
 #include <M5Stack.h>
 #include "HexRGB.h"
 
-#define NUM_HEX     3
+#define NUM_HEX     7
 #define BRIGTHNESS  5
 
 
@@ -88,8 +88,27 @@ void loop(){
   EVERY_N_MILLISECONDS( 10 ) 
   {
     sinBeat=beatsin8(30,0,6,0,0);
-    hexRGB.color(0,CRGB::Black);
+    hexRGB.color(0,CRGB::Blue);
     hexRGB.line(0, CRGB::Red,sinBeat);
+    
+    hexRGB.color(1,CRGB::Blue);
+    hexRGB.line(1, CRGB::Red,sinBeat);    
+    
+    hexRGB.color(2,CRGB::Blue);
+    hexRGB.line(2, CRGB::Red,sinBeat); 
+    
+    hexRGB.color(3,CRGB::Blue);
+    hexRGB.line(3, CRGB::Red,sinBeat); 
+    
+    hexRGB.color(4,CRGB::Blue);
+    hexRGB.line(4, CRGB::Red,sinBeat); 
+    
+    hexRGB.color(5,CRGB::Blue);
+    hexRGB.line(5, CRGB::Red,sinBeat); 
+    
+    hexRGB.color(6,CRGB::Blue);
+    hexRGB.line(6, CRGB::Red,sinBeat);         
+    
     hexRGB.show();
   } 
 /*  

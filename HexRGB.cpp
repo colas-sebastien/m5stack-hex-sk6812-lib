@@ -191,9 +191,9 @@ void HexRGB::gradient(int hex_ids[], int nb_hex, CRGBPalette16 palette, int dire
   }    */
 }
 
-void HexRGB::led(int hex_id, int pixel_id, CRGB color)
+void HexRGB::led(int hex_id, int led_id, CRGB color)
 {
-  leds[pixel_id+HEXRGB_NUM_LEDS*hex_id]=color;
+  leds[led_id+HEXRGB_NUM_LEDS*hex_id]=color;
 }
 
 void HexRGB::fadeToBlack  (int hex_id, uint8_t fadeBy)

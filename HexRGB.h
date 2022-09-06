@@ -40,7 +40,7 @@ class HexRGB
     void    fadeToBlack    (int hex_id, uint8_t fadeBy);
     void    gradient       (int hex_id, CRGBPalette16 palette, int direction,int index);
     void    gradient       (int hex_ids[],int nb_hex, CRGBPalette16 palette, int direction,int index, int gap);    
-    void    led            (int hex_id, int pixel_id, CRGB color);
+    void    led            (int hex_id, int led_id, CRGB color);
     void    led_array      (int hex_id, CRGB color, uint8_t *led_array,int led_array_size);    
     void    line           (int hex_id, CRGB color, int line_id);    
     void    rotation       (int hex_id, int rotation_id);
