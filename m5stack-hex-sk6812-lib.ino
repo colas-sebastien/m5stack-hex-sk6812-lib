@@ -11,10 +11,29 @@
 * - Please connect your M5Stick on the only port available and change the value of HEXRGB_PIN to 32 into the HexRGB.h file  
 */
 
-#include <M5Stack.h>
+/*******************************************/
+/* Comment/Uncomment depending your device */
+// #include <M5Stack.h>
+#include <M5Atom.h>
+/*******************************************/
+
+/*******************************************
+ * Set HEXRGB_PIN to your port number:
+ * 
+ *  M5Core    Port A  Pin 21
+ *            Port B  Pin 26
+ *            Port C  Pin 17
+ *            
+ *  M5Atom    Port    Pin 26
+ *  
+ *  M5Stick   Port    Pin 32 */
+// #define HEXRGB_PIN  26 
+/*  If not specified Pin 26 will be used
+ ******************************************/
+
 #include "HexRGB.h"
 
-#define NUM_HEX     7
+#define NUM_HEX     3
 #define BRIGTHNESS  5
 
 
@@ -44,98 +63,57 @@ DEFINE_GRADIENT_PALETTE( b_w_gp )
   255,    0,    0,    0   // black
 };
 
-int hex_ids[]={2,1};
-
 HexRGB hexRGB(NUM_HEX,BRIGTHNESS);
 
 void setup() {
   M5.begin();             //Init M5Stack.
-  M5.Power.begin();       //Init power 
 
+  for (int hex_id=0; hex_id<NUM_HEX; hex_id ++)
+  {
+    hexRGB.color(hex_id, CRGB::Red);
+  }
   hexRGB.show();
 }
 
-uint8_t i=0;
+uint8_t i_0=0;
 uint8_t sinBeat;
+uint8_t demo_id=0;
 
 void loop(){  
-
-/*
+  
   EVERY_N_MILLISECONDS( 100 ) 
-  {
-    hexRGB.fadeToBlack( 0, 80);
-    hexRGB.led(0,hexRGB.browse(2,i),CRGB::Red);
-        
-    i++;
-    if (i>=hexRGB.HEXRGB_NUM_LEDS)
-    {
-      i=0;
+  {    
+    for (int hex_id=0; hex_id<NUM_HEX; hex_id ++)
+    {    
+      switch (demo_id)
+      {
+        case 0:
+          hexRGB.border_gradient(hex_id, heatmap_gp,0,i_0*256/sizeof(HexRGB::HexBorderA));                      
+          break;
+        case 1:
+          hexRGB.color(hex_id,CRGB::Red);
+          hexRGB.line(hex_id, CRGB::Yellow,beatsin8(30,0,6,0,0));
+        case 2:
+          hexRGB.fadeToBlack( hex_id, 10);
+          hexRGB.led(hex_id,random8(HexRGB::HEXRGB_NUM_LEDS),CRGB::Red);
+        default:          
+          break;     
+      }      
     }
+    i_0=(i_0+1)%sizeof(HexRGB::HexBorderA);
     hexRGB.show();
-
-  }
-
-  EVERY_N_MILLISECONDS( 100 ) 
-  {
-    hexRGB.fadeToBlack( 0, 20);
-    int pos = random8(37);
-    hexRGB.led(0,pos,CRGB::Green);
-    hexRGB.show();
-  } 
-*/
-  
-
-  EVERY_N_MILLISECONDS( 10 ) 
-  {
-    sinBeat=beatsin8(30,0,6,0,0);
-    hexRGB.color(0,CRGB::Blue);
-    hexRGB.line(0, CRGB::Red,sinBeat);
-    
-    hexRGB.color(1,CRGB::Blue);
-    hexRGB.line(1, CRGB::Red,sinBeat);    
-    
-    hexRGB.color(2,CRGB::Blue);
-    hexRGB.line(2, CRGB::Red,sinBeat); 
-    
-    hexRGB.color(3,CRGB::Blue);
-    hexRGB.line(3, CRGB::Red,sinBeat); 
-    
-    hexRGB.color(4,CRGB::Blue);
-    hexRGB.line(4, CRGB::Red,sinBeat); 
-    
-    hexRGB.color(5,CRGB::Blue);
-    hexRGB.line(5, CRGB::Red,sinBeat); 
-    
-    hexRGB.color(6,CRGB::Blue);
-    hexRGB.line(6, CRGB::Red,sinBeat);         
-    
-    hexRGB.show();
-  } 
-/*  
-  hexRGB.border(0, CRGB::Blue,0);
-  hexRGB.border(0, CRGB::Blue,3);
-  hexRGB.border(1, CRGB::Blue,1);
-  hexRGB.border(2, CRGB::Blue,2);
-  hexRGB.line(2, CRGB::Red,0);
-  
-  hexRGB.show();
-  
-  
-  EVERY_N_MILLISECONDS( 50 ) 
-  {     
-    hexRGB.color(1, CRGB::Blue);
-    hexRGB.border_gradient(0, wave_gp,0,i*256/18);
-    hexRGB.border_gradient(0, wave_gp,1,i*256/18);
-    hexRGB.border_gradient(0, wave_gp,2,i*256/18);
-    hexRGB.border_gradient(0, wave_gp,3,i*256/18);
-    hexRGB.border_gradient(1, heatmap_gp,0,i*256/18);
-    hexRGB.gradient(2, b_w_gp,3,i*256/37);
-    i++;
-    if (i>36)
+    M5.update();
+    #ifdef _M5ATOM_H_
+    if (M5.Btn.wasPressed()) 
+    #else
+    if (M5.BtnA.wasPressed()) 
+    #endif
     {
-      i=0; 
-    }
-    hexRGB.show();
-  } 
-  */
+        demo_id=(demo_id+1)%4;
+        for (int hex_id=0; hex_id<NUM_HEX; hex_id ++)
+        {
+          hexRGB.color(hex_id, CRGB::Red);  
+        }        
+    }    
+  }     
 }

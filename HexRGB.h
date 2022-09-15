@@ -6,16 +6,18 @@
 
 #include "FastLED.h"
 
-#define HEXRGB_PIN            26  // Port B
-/*                                  
- *  M5Core    Port A  Pin 21
- *            Port B  Pin 26
- *            Port C  Pin 17
- *            
- *  M5Atom    Port    Pin 26
- *  
- *  M5Stick   Port    Pin 32
- */
+  #ifndef HEXRGB_PIN
+  /*                                  
+   *  M5Core    Port A  Pin 21
+   *            Port B  Pin 26
+   *            Port C  Pin 17
+   *            
+   *  M5Atom    Port    Pin 26
+   *  
+   *  M5Stick   Port    Pin 32
+   */
+   #define HEXRGB_PIN            26  // Port B
+   #endif
                                   
 
 
@@ -24,9 +26,9 @@ class HexRGB
   public:
 
     // Usesfull constants to control the Hex
-    const uint8_t HEXRGB_NUM_LEDS      = 37;
-    const uint8_t HEXRGB_NUM_LINES     =  7;
-    const uint8_t HEXRGB_NUM_DIAGONALS = 13;
+    static const uint8_t HEXRGB_NUM_LEDS      = 37;
+    static const uint8_t HEXRGB_NUM_LINES     =  7;
+    static const uint8_t HEXRGB_NUM_DIAGONALS = 13;
 
     // Contructor
     HexRGB(int number_hex,int brightness);
@@ -44,12 +46,8 @@ class HexRGB
     void    led_array      (int hex_id, CRGB color, uint8_t *led_array,int led_array_size);    
     void    line           (int hex_id, CRGB color, int line_id);    
     void    rotation       (int hex_id, int rotation_id);
-    void show();
+    void    show();
     void    triangle       (int hex_id, CRGB color);    
-    
-  private:
-    CRGB *tmpLeds;
-    CRGB *leds;   
 
     uint8_t HexRotation[37] = { 3, 8,14,21, 2, 7,13,20,27, 1, 6,12,19,26,32, 0, 5,11,18,25,31,36, 4,10,17,24,30,35, 9,16,23,29,34,15,22,28,33};
     
@@ -80,7 +78,11 @@ class HexRGB
     uint8_t HexDiagonalL[ 2] = {35,32};
     uint8_t HexDiagonalM[ 1] = {36};     
     
-    uint8_t HexBrowse1[37] = {0,1,2,3,8,14,21,27,32,36,35,34,33,28,22,15,9,4,5,6,7,13,20,26,31,30,29,23,16,10,11,12,19,25,24,17,18};   
+    uint8_t HexBrowse1[37] = {0,1,2,3,8,14,21,27,32,36,35,34,33,28,22,15,9,4,5,6,7,13,20,26,31,30,29,23,16,10,11,12,19,25,24,17,18};       
+
+  private:
+    CRGB *tmpLeds;
+    CRGB *leds;   
 };
 
 #endif           
