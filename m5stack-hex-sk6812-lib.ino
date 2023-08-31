@@ -33,7 +33,7 @@
 
 #include "HexRGB.h"
 
-#define NUM_HEX     3
+#define NUM_HEX     7
 #define BRIGTHNESS  5
 
 
@@ -76,8 +76,12 @@ void setup() {
 }
 
 uint8_t i_0=0;
+uint8_t i_1=0;
+uint8_t i_2=0;
 uint8_t sinBeat;
 uint8_t demo_id=0;
+
+CRGB color=CRGB::Red;
 
 void loop(){  
   
@@ -91,16 +95,36 @@ void loop(){
           hexRGB.border_gradient(hex_id, heatmap_gp,0,i_0*256/sizeof(HexRGB::HexBorderA));                      
           break;
         case 1:
+          hexRGB.border_gradient(hex_id, heatmap_gp,0,i_0*256/sizeof(HexRGB::HexBorderA));
+          hexRGB.border_gradient(hex_id, heatmap_gp,1,i_0*256/sizeof(HexRGB::HexBorderA));
+          hexRGB.border_gradient(hex_id, heatmap_gp,2,i_0*256/sizeof(HexRGB::HexBorderA));
+          hexRGB.border_gradient(hex_id, heatmap_gp,3,i_0*256/sizeof(HexRGB::HexBorderA));
+          break;          
+        case 2:
           hexRGB.color(hex_id,CRGB::Red);
           hexRGB.line(hex_id, CRGB::Yellow,beatsin8(30,0,6,0,0));
-        case 2:
+          break;
+        case 3:
           hexRGB.fadeToBlack( hex_id, 10);
           hexRGB.led(hex_id,random8(HexRGB::HEXRGB_NUM_LEDS),CRGB::Red);
-        default:          
+          break;
+        case 4:
+          hexRGB.color(hex_id,CRGB::Black);
+          hexRGB.line(hex_id, CRGB::Red,3);
+          hexRGB.rotation(hex_id, i_1);          
+          break;
+        case 5:
+          color.setHue(i_2);
+          hexRGB.color(hex_id,color); 
+          break;          
+        default:                  
           break;     
       }      
     }
     i_0=(i_0+1)%sizeof(HexRGB::HexBorderA);
+    i_1=(i_1+1)%7;
+    i_2+=5;
+    
     hexRGB.show();
     M5.update();
     #ifdef _M5ATOM_H_
@@ -109,7 +133,7 @@ void loop(){
     if (M5.BtnA.wasPressed()) 
     #endif
     {
-        demo_id=(demo_id+1)%4;
+        demo_id=(demo_id+1)%6;
         for (int hex_id=0; hex_id<NUM_HEX; hex_id ++)
         {
           hexRGB.color(hex_id, CRGB::Red);  
