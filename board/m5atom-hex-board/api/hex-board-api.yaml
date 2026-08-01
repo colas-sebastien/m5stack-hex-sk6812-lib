@@ -1,0 +1,75 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: hex-board-api
+paths: 
+  /board:
+    put:
+      requestBody:
+        content:
+          schema:
+            $ref: "#/components/schemas/HexDataInput"
+      responses:
+        "204":
+          description: No Content is returned
+    
+  /hexagons/{hex-id}:
+    parameters:
+      - name: hex-id
+        description:  "unique identifier for the hexagon (range: 0-18)"
+        in: path
+        required: true
+        schema:
+          type: number
+          minimum: 0
+          maximum: 18
+    put:
+      requestBody:
+        content:
+          content:          
+            schema:                
+              $ref: "#/components/schemas/HexDataInput"                  
+      responses:
+        "204":
+          description: No Content is returned
+
+components:
+  schemas:
+    HexDataInput:
+      type: object
+      properties:
+        effect:
+          description: effect to apply on the hexagon
+          type: string
+          enum:
+            - plain
+        display:
+          description: when to display
+          type: string
+          enum:
+            - now
+            - later
+        colors:
+          description: Maximum number of colors is 37 (one by rgb leds)
+          type: array
+          items:            
+            properties:
+              red:
+                type: number
+              green:
+                type: number
+              blue:
+                type: number              
+      required: 
+        - effect   
+        - colors    
+    BoardDataInput:
+      type: object
+      properties:
+        hexagons:
+          description: list of hexagons configuration
+          type: array
+          items:
+            $ref: "#/components/schemas/HexDataInput"
+        
+            

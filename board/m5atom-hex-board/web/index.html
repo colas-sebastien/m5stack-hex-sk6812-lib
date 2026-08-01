@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8' />
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+	<meta name='author' content='Sébastien Colas' />
+	<title>Hexagon Board Controller</title>
+
+	<style>
+		body {
+			overflow: hidden;
+		}
+	</style>
+</head>
+
+<body>
+    <h1>Hexagon Board Controller</h1>
+	<table>
+		<tr>
+			<td><canvas id='canvas' width='500' height='500'/></td>
+            <td><h1>Hexagon color</h1>		
+                <table>
+                    <tr>
+                        <td><label>id</label></td>
+                        <td><select name='id' id='id'></select></td>
+                    </tr>
+                    <tr>
+                        <td><label>color</label></td>
+                        <td><input type='color' id='color' name='color' value='#00000' /></td>
+                    </tr>
+                    <tr>
+                        <td><label>effect color</label></td>
+                        <td><input type='color' id='color-fx' name='color-fx' value='#00000' /></td>
+                    </tr>                    
+                    <tr>
+                        <td><label>effect</label></td>
+                        <td><select name='effect' id='effect'>
+                                <option>plain</option>
+                                <option>border</option>
+                            </select>
+                        </td>
+                    </tr>   
+                    <tr>
+                        <td><label>display</label></td>
+                        <td><select name='display' id='display'>
+                                <option>now</option>
+                                <option>later</option>
+                            </select>
+                        </td>
+                    </tr>                                       
+                    <tr>
+                        <td></td>
+                        <td><button id='apply'>Apply</button></td>
+                    </tr>                                        
+                </table>	                                
+                <br>
+			    			
+			</td>
+		</tr>	
+	</table>
+	
+    <script type='text/javascript' src='hexagon.js'></script>
+</script>
+</body>
+</html>
